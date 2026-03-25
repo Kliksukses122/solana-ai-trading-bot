@@ -9,30 +9,35 @@ dotenv.config();
 
 // Derive wallet address from private key if needed
 let derivedAddress = '';
-const privateKey = process.env.PRIVATE_KEY || '';
+const privateKey = process.env.PRIVATE_KEY || process.env.TREASURY_PRIVATE_KEY || process.env.SOLANA_PRIVATE_KEY || '';
 
 if (privateKey) {
   try {
-    const secretKey = bs58.decode(privateKey);
+    let secretKey: Uint8Array;
+    if (privateKey.startsWith('[')) {
+      secretKey = new Uint8Array(JSON.parse(privateKey));
+    } else {
+      secretKey = bs58.decode(privateKey);
+    }
     const keypair = Keypair.fromSecretKey(secretKey);
     derivedAddress = keypair.publicKey.toBase58();
   } catch (e) {
-    console.error('Failed to derive wallet address from PRIVATE_KEY');
+    console.error('Failed to derive wallet address from private key');
   }
 }
 
 const config = {
   // Solana Network
   solana: {
-    rpcUrl: process.env.RPC_URL || 'https://api.mainnet-beta.solana.com',
-    wsUrl: process.env.WS_URL || 'wss://api.mainnet-beta.solana.com',
+    rpcUrl: process.env.RPC_URL || process.env.SOLANA_RPC_URL || process.env.NEXT_PUBLIC_RPC_ENDPOINT || 'https://api.mainnet-beta.solana.com',
+    wsUrl: process.env.WS_URL || process.env.SOLANA_WS_URL || 'wss://api.mainnet-beta.solana.com',
     commitment: 'confirmed',
   },
 
   // Wallet
   wallet: {
     privateKey: privateKey,
-    address: process.env.WALLET_ADDRESS || derivedAddress || '',
+    address: process.env.WALLET_ADDRESS || process.env.TREASURY_WALLET_ADDRESS || derivedAddress || '',
     inputMint: 'So11111111111111111111111111111111111111112', // SOL
     outputMint: process.env.OUTPUT_MINT || 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v', // USDC
   },
