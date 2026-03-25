@@ -10,6 +10,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// Default DATABASE_URL for production
+// DATABASE_URL="file:./dev.db"
+
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
