@@ -3,7 +3,23 @@
  */
 
 import dotenv from 'dotenv';
+import { Keypair } from '@solana/web3.js';
+import bs58 from 'bs58';
 dotenv.config();
+
+// Derive wallet address from private key if needed
+let derivedAddress = '';
+const privateKey = process.env.PRIVATE_KEY || '';
+
+if (privateKey) {
+  try {
+    const secretKey = bs58.decode(privateKey);
+    const keypair = Keypair.fromSecretKey(secretKey);
+    derivedAddress = keypair.publicKey.toBase58();
+  } catch (e) {
+    console.error('Failed to derive wallet address from PRIVATE_KEY');
+  }
+}
 
 const config = {
   // Solana Network
@@ -15,8 +31,8 @@ const config = {
 
   // Wallet
   wallet: {
-    privateKey: process.env.PRIVATE_KEY || '',
-    address: process.env.WALLET_ADDRESS || '',
+    privateKey: privateKey,
+    address: process.env.WALLET_ADDRESS || derivedAddress || '',
     inputMint: 'So11111111111111111111111111111111111111112', // SOL
     outputMint: process.env.OUTPUT_MINT || 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v', // USDC
   },
@@ -110,7 +126,7 @@ const config = {
 
   // Bot Mode
   bot: {
-    mockMode: process.env.MOCK_MODE !== 'false',
+    mockMode: process.env.MOCK_MODE === 'true' || (!process.env.PRIVATE_KEY && process.env.MOCK_MODE !== 'false'),
     dashboardPort: 3000,
   },
 

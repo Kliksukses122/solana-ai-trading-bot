@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server';
 import { Connection, PublicKey } from '@solana/web3.js';
+import config from '@/config/config';
 
-const TREASURY_PUBLIC_KEY = 'FfZsEWdFdAfUkPJ3Zq45PxeZQGXb9f68HHGFJs9rKuE';
-const RPC_ENDPOINT = 'https://api.mainnet-beta.solana.com';
+const TREASURY_PUBLIC_KEY = config.wallet.address || 'FfZsEWdFdAfUkPJ3Zq45PxeZQGXb9f68HHGFJs9rKuE';
+const RPC_ENDPOINT = config.solana.rpcUrl || 'https://api.mainnet-beta.solana.com';
 
 async function getRealBalance(): Promise<number> {
   try {

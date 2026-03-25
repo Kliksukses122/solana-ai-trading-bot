@@ -80,7 +80,7 @@ const DEFAULT_CONFIG: TradingConfig = {
   maxOpenPositions: 3
 }
 
-const TREASURY_ADDRESS = 'FfZsEWdFdAfUkPJ3Zq45PxeZQGXb9f68HHGFJs9rKuE'
+// const TREASURY_ADDRESS = 'FfZsEWdFdAfUkPJ3Zq45PxeZQGXb9f68HHGFJs9rKuE'
 
 const AGENTS = [
   { name: 'Scout', icon: Search, color: 'text-blue-400', desc: 'Token screening' },
@@ -94,6 +94,7 @@ const AGENTS = [
 export default function TradingBotDashboard() {
   // ============ STATE ============
   const [balance, setBalance] = useState(0)
+  const [treasuryAddress, setTreasuryAddress] = useState('')
   const [isRunning, setIsRunning] = useState(false)
   const [positions, setPositions] = useState<Position[]>([])
   const [logs, setLogs] = useState<{ time: number; message: string; type: string }[]>([])
@@ -147,10 +148,11 @@ export default function TradingBotDashboard() {
   // ============ WALLET ============
   const checkWallet = useCallback(async (): Promise<number> => {
     try {
-      const data = await safeFetch('/api/jupiter?action=balance')
+      const data = await safeFetch('/api/bot?action=balance')
       if (data.success) {
-        setBalance(data.solBalance || 0)
-        return data.solBalance || 0
+        setBalance(data.balance || 0)
+        setTreasuryAddress(data.wallet || '')
+        return data.balance || 0
       }
       return 0
     } catch (error: any) {
@@ -508,12 +510,14 @@ export default function TradingBotDashboard() {
                       </div>
                       <div>
                         <div className="font-medium text-sm">Treasury Wallet</div>
-                        <div className="text-xs text-gray-400 font-mono flex items-center gap-2">
-                          {TREASURY_ADDRESS.slice(0, 8)}...{TREASURY_ADDRESS.slice(-6)}
-                          <Button variant="ghost" size="sm" onClick={() => navigator.clipboard.writeText(TREASURY_ADDRESS)} className="h-5 px-1">
-                            <Copy className="w-3 h-3" />
-                          </Button>
-                        </div>
+                         <div className="text-xs text-gray-400 font-mono flex items-center gap-2">
+                           {treasuryAddress ? `${treasuryAddress.slice(0, 8)}...${treasuryAddress.slice(-6)}` : 'Wallet not connected'}
+                           {treasuryAddress && (
+                             <Button variant="ghost" size="sm" onClick={() => navigator.clipboard.writeText(treasuryAddress)} className="h-5 px-1">
+                               <Copy className="w-3 h-3" />
+                             </Button>
+                           )}
+                         </div>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">

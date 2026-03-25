@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import config from '@/config/config'
 
 interface TokenData {
   symbol: string
@@ -34,7 +35,7 @@ const POPULAR_TOKEN_MINTS = [
 
 // Helius API configuration
 const HELIUS_API_KEY = process.env.HELIUS_API_KEY || ''
-const HELIUS_RPC_URL = process.env.NEXT_PUBLIC_RPC_ENDPOINT || 'https://api.mainnet-beta.solana.com'
+const HELIUS_RPC_URL = config.solana.rpcUrl || 'https://api.mainnet-beta.solana.com'
 
 /**
  * Fetch token price using Helius DAS API

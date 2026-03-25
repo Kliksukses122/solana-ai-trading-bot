@@ -6,6 +6,8 @@
  */
 
 import { Connection, Keypair, VersionedTransaction, PublicKey, LAMPORTS_PER_SOL } from '@solana/web3.js'
+import config from '@/config/config'
+import bs58 from 'bs58'
 
 const JUPITER_QUOTE_API = 'https://quote-api.jup.ag/v6'
 const SOL_MINT = 'So11111111111111111111111111111111111111112'
@@ -42,16 +44,16 @@ interface SwapResponse {
 
 // Get connection
 function getConnection(): Connection {
-  const rpcUrl = process.env.NEXT_PUBLIC_RPC_ENDPOINT || 'https://api.mainnet-beta.solana.com'
+  const rpcUrl = config.solana.rpcUrl || 'https://api.mainnet-beta.solana.com'
   return new Connection(rpcUrl, 'confirmed')
 }
 
 // Get treasury wallet keypair from private key
 function getTreasuryKeypair(): Keypair | null {
   try {
-    const privateKey = process.env.TREASURY_PRIVATE_KEY
+    const privateKey = config.wallet.privateKey
     if (!privateKey) {
-      console.error('TREASURY_PRIVATE_KEY not set in environment')
+      console.error('PRIVATE_KEY not set in environment')
       return null
     }
     
@@ -62,9 +64,8 @@ function getTreasuryKeypair(): Keypair | null {
       // JSON array format
       secretKey = new Uint8Array(JSON.parse(privateKey))
     } else {
-      // Base58 format - need to decode
-      const bs58 = require('bs58')
-      secretKey = bs58.default.decode(privateKey)
+      // Base58 format
+      secretKey = bs58.decode(privateKey)
     }
     
     return Keypair.fromSecretKey(secretKey)
@@ -270,7 +271,7 @@ export async function getTokenBalance(
 }
 
 // Treasury wallet address (public)
-const TREASURY_PUBLIC_KEY = 'FfZsEWdFdAfUkPJ3Zq45PxeZQGXb9f68HHGFJs9rKuE'
+const TREASURY_PUBLIC_KEY = config.wallet.address || 'FfZsEWdFdAfUkPJ3Zq45PxeZQGXb9f68HHGFJs9rKuE'
 
 // Get SOL balance for treasury wallet (uses public key only)
 export async function getSolBalance(): Promise<number> {

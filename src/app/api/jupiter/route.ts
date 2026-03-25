@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { executeSwap, getSolBalance, getTokenBalance } from '@/services/jupiterSwapService'
+import config from '@/config/config'
 
 export async function POST(request: NextRequest) {
   try {
@@ -7,10 +8,10 @@ export async function POST(request: NextRequest) {
     const { action, tokenMint, amountSol, slippageBps } = body
     
     // Check for treasury private key
-    if (!process.env.TREASURY_PRIVATE_KEY) {
+    if (!config.wallet.privateKey) {
       return NextResponse.json({
         success: false,
-        error: 'TREASURY_PRIVATE_KEY not configured. Please add your treasury wallet private key to .env'
+        error: 'PRIVATE_KEY not configured. Please add your wallet private key to environment variables'
       }, { status: 500 })
     }
     

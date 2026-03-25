@@ -1,16 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Connection, Keypair, VersionedTransaction, LAMPORTS_PER_SOL } from '@solana/web3.js';
+import config from '@/config/config';
+import bs58 from 'bs58';
 
-const RPC_ENDPOINT = process.env.NEXT_PUBLIC_RPC_ENDPOINT || 'https://api.mainnet-beta.solana.com';
+const RPC_ENDPOINT = config.solana.rpcUrl || 'https://api.mainnet-beta.solana.com';
 const JUPITER_QUOTE_API = 'https://quote-api.jup.ag/v6';
 const SOL_MINT = 'So11111111111111111111111111111111111111112';
 
 function getTreasuryKeypair(): Keypair | null {
   try {
-    const privateKeyEnv = process.env.TREASURY_PRIVATE_KEY;
-    if (!privateKeyEnv) return null;
-    const secretKey = JSON.parse(privateKeyEnv);
-    return Keypair.fromSecretKey(new Uint8Array(secretKey));
+    const privateKey = config.wallet.privateKey;
+    if (!privateKey) return null;
+    
+    if (privateKey.startsWith('[')) {
+      const secretKey = JSON.parse(privateKey);
+      return Keypair.fromSecretKey(new Uint8Array(secretKey));
+    } else {
+      const secretKey = bs58.decode(privateKey);
+      return Keypair.fromSecretKey(secretKey);
+    }
   } catch { return null; }
 }
 
