@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: solana-ai-trading-bot
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: TREASURY_PRIVATE_KEY
+        sync: false
+      - key: NEXT_PUBLIC_RPC_ENDPOINT
+        value: https://api.mainnet-beta.solana.com

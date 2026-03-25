@@ -246,18 +246,16 @@ export async function executeSwap(
   }
 }
 
-// Get token balance for treasury wallet
+// Get token balance for treasury wallet (uses public key only)
 export async function getTokenBalance(
   tokenMint: string
 ): Promise<number> {
   try {
     const connection = getConnection()
-    const treasuryKeypair = getTreasuryKeypair()
-    
-    if (!treasuryKeypair) return 0
+    const treasuryPubkey = new PublicKey(TREASURY_PUBLIC_KEY)
     
     const tokenAccounts = await connection.getParsedTokenAccountsByOwner(
-      treasuryKeypair.publicKey,
+      treasuryPubkey,
       { mint: new PublicKey(tokenMint) }
     )
     
@@ -271,15 +269,15 @@ export async function getTokenBalance(
   }
 }
 
-// Get SOL balance for treasury wallet
+// Treasury wallet address (public)
+const TREASURY_PUBLIC_KEY = 'FfZsEWdFdAfUkPJ3Zq45PxeZQGXb9f68HHGFJs9rKuE'
+
+// Get SOL balance for treasury wallet (uses public key only)
 export async function getSolBalance(): Promise<number> {
   try {
     const connection = getConnection()
-    const treasuryKeypair = getTreasuryKeypair()
-    
-    if (!treasuryKeypair) return 0
-    
-    const balance = await connection.getBalance(treasuryKeypair.publicKey)
+    const treasuryPubkey = new PublicKey(TREASURY_PUBLIC_KEY)
+    const balance = await connection.getBalance(treasuryPubkey)
     return balance / LAMPORTS_PER_SOL
   } catch (error) {
     console.error('Error getting SOL balance:', error)

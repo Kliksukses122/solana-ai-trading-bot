@@ -1,181 +1,96 @@
 # Solana AI Trading Bot
 
-A production-ready multi-agent AI trading bot for Solana with Jupiter Aggregator integration, featuring real-time market analysis, machine learning predictions, and a modern dashboard UI.
+Multi-strategy AI trading bot dengan 6 AI agents untuk Solana.
 
-## Features
+## 🚀 Deploy ke Render
 
-- **Multi-Agent Architecture**: 6 specialized agents working together
-  - **Scout Agent**: Real-time token scanning, whale tracking, opportunity detection
-  - **Analyst Agent**: Technical analysis (RSI, MACD, Bollinger Bands), ML predictions
-  - **Risk Agent**: Position sizing, stop-loss, take-profit, risk limits
-  - **Trader Agent**: Jupiter swap integration, transaction execution
-  - **Memory Agent**: Trade history, performance tracking
-  - **Manager Agent**: Orchestration, cooldown management
+### Langkah 1: Push ke GitHub
 
-- **Technical Analysis**: RSI, MACD, EMA crossovers, Bollinger Bands, momentum
-- **ML Predictions**: Ensemble model with neural network, momentum, and mean reversion
-- **Whale Tracking**: Monitor large wallet activities
-- **Jupiter Integration**: Full swap flow with slippage control
-- **Real-time Dashboard**: Modern UI with live updates via WebSocket
-- **Paper Trading**: Mock mode for safe testing
+```bash
+cd /home/z/my-project
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin https://github.com/USERNAME/REPO.git
+git push -u origin main
+```
 
-## Quick Start
+### Langkah 2: Deploy di Render
 
-### Prerequisites
+1. Buka [render.com](https://render.com) dan login
+2. Klik **New +** → **Web Service**
+3. Connect GitHub repository
+4. Setting:
+   - **Name**: `solana-ai-trading-bot`
+   - **Runtime**: `Node`
+   - **Build Command**: `npm install && npm run build`
+   - **Start Command**: `npm run start`
+   - **Plan**: `Free`
+5. Add Environment Variables:
+   ```
+   TREASURY_PRIVATE_KEY = [your,private,key,array]
+   ```
+6. Klik **Create Web Service**
 
-- Node.js 18+
-- Bun (recommended) or npm
-- Solana wallet with private key (for live trading)
+### Langkah 3: Tunggu Deploy
 
-### Installation
+- Build akan memakan waktu 2-5 menit
+- Setelah selesai, buka URL yang diberikan Render
+
+---
+
+## ⚙️ Environment Variables
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `TREASURY_PRIVATE_KEY` | Yes* | Private key wallet untuk swap |
+| `NEXT_PUBLIC_RPC_ENDPOINT` | No | Solana RPC URL (default: mainnet) |
+
+*Required untuk real trading, tanpa ini hanya bisa paper trading
+
+---
+
+## 🔑 Private Key Format
+
+Untuk `TREASURY_PRIVATE_KEY`, format harus JSON array:
+
+```
+[140,76,124,43,12,85,190,219,0,222,146,113,57,194,90,53,223,2,42,241,228,97,41,248,191,40,246,125,141,125,97,184,190,240,50,149,89,91,202,65,194,82,150,179,61,97,250,23,238,213,168,145,159,154,28,62,150,23,36,197,52,54,110,237]
+```
+
+### Cara Ambil dari Phantom:
+1. Settings → Security & Privacy
+2. Export Private Key
+3. Masukkan password
+4. Copy key tersebut
+
+---
+
+## 📊 Fitur
+
+- ✅ **6 AI Agents** - Scout, Analyst, Risk, Trader, Monitor, Brain
+- ✅ **Auto Trading** - Start/Stop dengan satu klik
+- ✅ **Risk Management** - Max 3 posisi, 15% daily loss limit
+- ✅ **Stop Loss & Take Profit** - Auto monitoring
+- ✅ **Token Screening** - Live dari DexScreener
+
+---
+
+## 🔧 Local Development
 
 ```bash
 # Install dependencies
-bun install
+npm install
 
-# Copy environment file
-cp .env.example .env
+# Run dev server
+npm run dev
 
-# Edit .env with your configuration
-# IMPORTANT: Set MOCK_MODE=true for testing
+# Open http://localhost:3000
 ```
 
-### Running the Bot
+---
 
-```bash
-# Start the trading bot
-bun run bot
+## ⚠️ Risk Warning
 
-# Start with auto-reload (development)
-bun run bot:dev
-
-# Start the API service (for dashboard)
-bun run api
-
-# Start the dashboard
-bun run dev
-```
-
-## Project Structure
-
-```
-src/
-├── bot.js                 # Main entry point
-├── config/
-│   └── config.js          # Configuration management
-├── core/
-│   └── eventBus.js        # Event-driven communication
-├── agents/
-│   ├── scoutAgent.js      # Token discovery
-│   ├── analystAgent.js    # Technical analysis
-│   ├── riskAgent.js       # Risk management
-│   ├── traderAgent.js     # Trade execution
-│   ├── managerAgent.js    # Orchestration
-│   └── memoryAgent.js     # State & history
-├── services/
-│   ├── dataService.js     # Market data fetching
-│   ├── indicatorService.js # Technical indicators
-│   ├── jupiterService.js  # Jupiter swap API
-│   ├── walletService.js   # Wallet management
-│   └── mlService.js       # ML predictions
-└── utils/
-    └── logger.js          # Logging system
-```
-
-## Configuration
-
-### Environment Variables
-
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `PRIVATE_KEY` | Solana wallet private key (base58) | Required for live mode |
-| `RPC_URL` | Solana RPC endpoint | `https://api.mainnet-beta.solana.com` |
-| `TRADE_SIZE_SOL` | Default trade size in SOL | `0.01` |
-| `MAX_RISK_PERCENT` | Max risk per trade (%) | `2` |
-| `STOP_LOSS_PERCENT` | Stop loss percentage | `5` |
-| `TAKE_PROFIT_PERCENT` | Take profit percentage | `10` |
-| `SLIPPAGE_BPS` | Slippage in basis points | `50` |
-| `COOLDOWN_SECONDS` | Cooldown between trades | `60` |
-| `MOCK_MODE` | Paper trading mode | `true` |
-
-## API Endpoints
-
-The bot exposes a WebSocket API on port 3030 for dashboard communication:
-
-### Events
-
-- `state` - Full bot state
-- `get-status` - Request current status
-- `get-trades` - Request trade history
-- `get-performance` - Request performance metrics
-- `manual-trade` - Execute manual trade
-- `start-bot` / `stop-bot` - Control bot state
-- `add-token` - Add token to monitor
-
-## Dashboard
-
-The dashboard provides real-time monitoring and control:
-
-- **Overview**: Performance metrics, portfolio chart, opportunities
-- **Trades**: Complete trade history
-- **Positions**: Active position management
-- **Agents**: Agent status and metrics
-
-Access at `http://localhost:3000`
-
-## Security
-
-- Never commit `.env` file or private keys
-- Use `MOCK_MODE=true` for testing
-- Set appropriate risk limits
-- Monitor the bot regularly
-- Use dedicated trading wallet
-
-## Risk Management
-
-The bot implements multiple risk controls:
-
-- Maximum risk per trade (1-2%)
-- Daily loss limit
-- Maximum drawdown protection
-- Emergency stop functionality
-- Position size limits
-- Token blacklist/whitelist
-
-## Technical Indicators
-
-Supported indicators:
-
-- **RSI**: Relative Strength Index (14-period)
-- **MACD**: Moving Average Convergence Divergence
-- **EMA**: Exponential Moving Averages (9/21 crossover)
-- **Bollinger Bands**: Volatility bands
-- **Volume Analysis**: Volume spikes and trends
-- **Support/Resistance**: Key price levels
-
-## ML Predictions
-
-The ML service uses an ensemble approach:
-
-1. **Neural Network**: Simple feed-forward network
-2. **Momentum**: Price momentum analysis
-3. **Mean Reversion**: Statistical mean reversion
-
-Predictions are weighted and combined for final signals.
-
-## Jupiter Integration
-
-Full integration with Jupiter Aggregator v6:
-
-1. Quote fetching with slippage control
-2. Transaction building
-3. Transaction signing
-4. Transaction sending and confirmation
-
-## License
-
-MIT License - Use at your own risk
-
-## Disclaimer
-
-This software is provided for educational purposes only. Cryptocurrency trading carries significant risk. The authors are not responsible for any financial losses. Always test thoroughly in mock mode before live trading.
+Trading cryptocurrency melibatkan risiko tinggi. Hanya gunakan dana yang siap hilang.

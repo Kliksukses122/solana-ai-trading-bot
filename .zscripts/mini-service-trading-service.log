@@ -4,7 +4,8 @@ bun install v1.3.10 (30e609e0)
 + cors@2.8.6
 + socket.io@4.8.3
 
-22 packages installed [110.00ms]
+22 packages installed [95.00ms]
 [trading-service] Running bun run dev...
 $ bun --hot index.ts
 [Trading Service] Running on port 3003
+error: script "dev" was terminated by signal SIGTERM (Polite quit request)

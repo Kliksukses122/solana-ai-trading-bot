@@ -4,7 +4,7 @@ bun install v1.3.10 (30e609e0)
 + @solana/web3.js@1.98.4
 + socket.io@4.8.3
 
-74 packages installed [330.00ms]
+74 packages installed [305.00ms]
 [trading-bot-api] Running bun run dev...
 $ bun --hot index.js
 Solana connection initialized
@@ -12,3 +12,4 @@ Trading Bot API running on port 3030
 WebSocket endpoint: ws://localhost:3030
 Monitoring wallet: vQuaowFLXdwN8Xt1z1YaZGtLTPWnpz1mYUvLsZjVVTJ
 State file: /home/z/my-project/data/bot-state.json
+error: script "dev" was terminated by signal SIGTERM (Polite quit request)
