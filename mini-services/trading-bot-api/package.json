@@ -1,0 +1,13 @@
+{
+  "name": "trading-bot-api",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "bun --hot index.js"
+  },
+  "dependencies": {
+    "socket.io": "^4.7.5",
+    "@solana/web3.js": "^1.91.1"
+  }
+}

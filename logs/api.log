@@ -1,0 +1,5 @@
+Solana connection initialized
+Trading Bot API running on port 3030
+WebSocket endpoint: ws://localhost:3030
+Monitoring wallet: vQuaowFLXdwN8Xt1z1YaZGtLTPWnpz1mYUvLsZjVVTJ
+State file: /home/z/my-project/data/bot-state.json

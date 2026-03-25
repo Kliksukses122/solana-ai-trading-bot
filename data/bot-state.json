@@ -1,0 +1,596 @@
+{
+  "status": "running",
+  "mockMode": false,
+  "startTime": 1773846789244,
+  "lastUpdate": 1773913321075,
+  "wallet": {
+    "address": "vQuaowFLXdwN8Xt1z1YaZGtLTPWnpz1mYUvLsZjVVTJ",
+    "balance": 0,
+    "balanceUsd": 0
+  },
+  "agents": {
+    "scout": {
+      "name": "ScoutAgent",
+      "isRunning": true,
+      "monitoredTokens": 6,
+      "whaleWallets": 0,
+      "recentOpportunities": 100,
+      "scanIntervalMs": 3000
+    },
+    "analyst": {
+      "name": "AnalystAgent",
+      "cacheSize": 0,
+      "historySize": 0,
+      "minConfidence": 0.55,
+      "mlEnabled": true,
+      "mlStats": [
+        {
+          "tokenMint": "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm",
+          "accuracy": 0.5,
+          "predictions": 0,
+          "correctPredictions": 0,
+          "lastTrained": null
+        },
+        {
+          "tokenMint": "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
+          "accuracy": 0.5,
+          "predictions": 0,
+          "correctPredictions": 0,
+          "lastTrained": null
+        },
+        {
+          "tokenMint": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
+          "accuracy": 0.5,
+          "predictions": 0,
+          "correctPredictions": 0,
+          "lastTrained": null
+        },
+        {
+          "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "accuracy": 0.5,
+          "predictions": 0,
+          "correctPredictions": 0,
+          "lastTrained": null
+        },
+        {
+          "tokenMint": "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
+          "accuracy": 0.5,
+          "predictions": 0,
+          "correctPredictions": 0,
+          "lastTrained": null
+        },
+        {
+          "tokenMint": "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN",
+          "accuracy": 0.5,
+          "predictions": 0,
+          "correctPredictions": 0,
+          "lastTrained": null
+        }
+      ],
+      "tokensAnalyzed": 0,
+      "scoringConfig": {
+        "buyThreshold": 7,
+        "watchThreshold": 5,
+        "volumeSpikeThreshold": 50,
+        "liquidityThreshold": 50000
+      }
+    },
+    "risk": {
+      "name": "RiskAgent",
+      "emergencyStop": false,
+      "activePositions": 0,
+      "dailyPnL": 0,
+      "dailyTrades": 0,
+      "emergencyStopReason": null,
+      "tradeHistorySize": 0,
+      "blacklistSize": 0,
+      "whitelistSize": 0,
+      "config": {
+        "maxRiskPercent": 5,
+        "stopLossPercent": 15,
+        "takeProfitPercent": 30,
+        "maxDailyLossPercent": 20,
+        "maxDrawdownPercent": 30,
+        "maxOpenTrades": 5
+      },
+      "dailyWins": 0,
+      "dailyLosses": 0,
+      "consecutiveLosses": 0,
+      "cooldownActive": false,
+      "cooldownRemaining": null,
+      "riskConfig": {
+        "maxRiskPercent": 2,
+        "stopLossPercent": 2,
+        "takeProfitPercent": 8,
+        "maxDailyLossPercent": 5,
+        "maxDailyTrades": 5,
+        "maxConsecutiveLosses": 3
+      }
+    },
+    "trader": {
+      "name": "TraderAgent",
+      "mockMode": false,
+      "pendingTransactions": 0,
+      "completedTrades": 0,
+      "walletAddress": "vQuaowFLXdwN8Xt1z1YaZGtLTPWnpz1mYUvLsZjVVTJ",
+      "defaultSlippage": "1%",
+      "activeOrders": 0,
+      "maxSlippage": "2%",
+      "executionStats": {
+        "totalExecuted": 0,
+        "successful": 0,
+        "failed": 0,
+        "totalVolume": 0,
+        "avgExecutionTime": 0,
+        "slippageIssues": 0
+      }
+    },
+    "memory": {
+      "name": "MemoryAgent",
+      "totalTrades": 0,
+      "performanceMetrics": {
+        "totalTrades": 0,
+        "winningTrades": 0,
+        "losingTrades": 0,
+        "totalPnL": 0,
+        "totalFees": 0,
+        "winRate": 0,
+        "avgWin": 0,
+        "avgLoss": 0,
+        "profitFactor": 0,
+        "sharpeRatio": 0,
+        "maxDrawdown": 0,
+        "avgHoldingTime": 0,
+        "bestTrade": null,
+        "worstTrade": null
+      }
+    }
+  },
+  "performance": {
+    "totalTrades": 0,
+    "winRate": 0,
+    "totalPnL": 0,
+    "profitFactor": 0,
+    "maxDrawdown": 0,
+    "avgHoldingTime": 0
+  },
+  "recentTrades": [],
+  "opportunities": [
+    {
+      "tokenMint": "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN",
+      "symbol": "JUP",
+      "price": 0.1617,
+      "liquidity": 353606.76,
+      "volume24h": 1276924.42,
+      "priceChange24h": -2.77,
+      "score": 0.5223,
+      "timestamp": 1773847056692,
+      "type": "HIGH_VOLUME"
+    },
+    {
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "price": 0.9998,
+      "liquidity": 4557472.73,
+      "volume24h": 4007194.68,
+      "priceChange24h": 0.01,
+      "score": 0.5501,
+      "timestamp": 1773913319974,
+      "type": "STANDARD"
+    },
+    {
+      "tokenMint": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
+      "symbol": "POPCAT",
+      "price": 0.05437,
+      "liquidity": 3437644.79,
+      "volume24h": 452279.16,
+      "priceChange24h": -1.6,
+      "score": 0.534,
+      "timestamp": 1773847056353,
+      "type": "STANDARD"
+    }
+  ],
+  "positions": [],
+  "eventLog": [
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913319974
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913316947
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913314198
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913310940
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913307972
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913304939
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913302236
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913298932
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913295985
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913292972
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913289986
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913286931
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913284217
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913280930
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913277970
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913274926
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913272242
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913268924
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913265964
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913262922
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913259977
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913256922
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913254193
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913250922
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913247960
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913244921
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913241955
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913238922
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913235957
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913232955
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913229951
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913226918
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913224209
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913220920
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913217946
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913214917
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913212226
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913208913
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913205956
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913202952
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913199951
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913196909
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913194172
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913190906
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913188244
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913184908
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913182201
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913178905
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913175945
+    },
+    {
+      "type": "opportunity",
+      "action": "found",
+      "tokenMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "symbol": "USDC",
+      "score": 0.5501,
+      "timestamp": 1773913172939
+    }
+  ]
+}

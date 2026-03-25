@@ -1,0 +1,22 @@
+{
+  "tradeHistory": [],
+  "performanceMetrics": {
+    "totalTrades": 0,
+    "winningTrades": 0,
+    "losingTrades": 0,
+    "totalPnL": 0,
+    "totalFees": 0,
+    "winRate": 0,
+    "avgWin": 0,
+    "avgLoss": 0,
+    "profitFactor": 0,
+    "sharpeRatio": 0,
+    "maxDrawdown": 0,
+    "avgHoldingTime": 0,
+    "bestTrade": null,
+    "worstTrade": null
+  },
+  "tokenPerformance": [],
+  "agentStats": [],
+  "lastPersisted": 1773913279698
+}
