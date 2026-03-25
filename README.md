@@ -94,3 +94,4 @@ npm run dev
 ## ⚠️ Risk Warning
 
 Trading cryptocurrency melibatkan risiko tinggi. Hanya gunakan dana yang siap hilang.
+
