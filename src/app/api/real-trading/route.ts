@@ -1,100 +1,73 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { Connection, Keypair, VersionedTransaction, LAMPORTS_PER_SOL } from '@solana/web3.js';
-import config from '@/config/config';
-import bs58 from 'bs58';
+import { NextRequest, NextResponse } from 'next/server'
+import { Connection, Keypair, VersionedTransaction, LAMPORTS_PER_SOL } from '@solana/web3.js'
 
-const RPC_ENDPOINT = config.solana.rpcUrl || 'https://api.mainnet-beta.solana.com';
-const JUPITER_QUOTE_API = 'https://quote-api.jup.ag/v6';
-const SOL_MINT = 'So11111111111111111111111111111111111111112';
+const RPC = process.env.NEXT_PUBLIC_RPC_ENDPOINT || 'https://api.mainnet-beta.solana.com'
+const JUPITER = 'https://quote-api.jup.ag/v6'
+const SOL = 'So11111111111111111111111111111111111111112'
 
-function getTreasuryKeypair(): Keypair | null {
+function getWallet() {
   try {
-    const privateKey = config.wallet.privateKey;
-    if (!privateKey) return null;
-    
-    if (privateKey.startsWith('[')) {
-      const secretKey = JSON.parse(privateKey);
-      return Keypair.fromSecretKey(new Uint8Array(secretKey));
-    } else {
-      const secretKey = bs58.decode(privateKey);
-      return Keypair.fromSecretKey(secretKey);
-    }
-  } catch { return null; }
+    const key = process.env.TREASURY_PRIVATE_KEY
+    if (!key) return null
+    return Keypair.fromSecretKey(new Uint8Array(JSON.parse(key)))
+  } catch { return null }
 }
 
-async function getRealBalance(): Promise<number> {
-  try {
-    const keypair = getTreasuryKeypair();
-    if (!keypair) return 0;
-    const connection = new Connection(RPC_ENDPOINT, 'confirmed');
-    const balance = await connection.getBalance(keypair.publicKey);
-    return balance / LAMPORTS_PER_SOL;
-  } catch { return 0; }
+async function getBalance() {
+  const wallet = getWallet()
+  if (!wallet) return 0
+  const conn = new Connection(RPC, 'confirmed')
+  return (await conn.getBalance(wallet.publicKey)) / LAMPORTS_PER_SOL
 }
 
-async function getJupiterQuote(inputMint: string, outputMint: string, amount: number, slippageBps = 500) {
-  const url = `${JUPITER_QUOTE_API}/quote?inputMint=${inputMint}&outputMint=${outputMint}&amount=${amount}&slippageBps=${slippageBps}`;
-  const response = await fetch(url);
-  return response.ok ? await response.json() : null;
-}
-
-async function executeSwap(keypair: Keypair, quoteResponse: any) {
-  const connection = new Connection(RPC_ENDPOINT, 'confirmed');
-  const swapResponse = await fetch(`${JUPITER_QUOTE_API}/swap`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      quoteResponse,
-      userPublicKey: keypair.publicKey.toString(),
-      wrapAndUnwrapSol: true,
-      dynamicComputeUnitLimit: true,
-      prioritizationFeeLamports: 'auto',
-    }),
-  });
-  const { swapTransaction } = await swapResponse.json();
-  const transaction = VersionedTransaction.deserialize(Buffer.from(swapTransaction, 'base64'));
-  transaction.sign([keypair]);
-  const txid = await connection.sendRawTransaction(transaction.serialize(), { skipPreflight: true });
-  await connection.confirmTransaction(txid, 'confirmed');
-  return txid;
-}
-
-export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const action = searchParams.get('action');
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url)
+  const wallet = getWallet()
+  const balance = await getBalance()
   
-  const balance = await getRealBalance();
-  const keypair = getTreasuryKeypair();
-  
-  if (action === 'balance') {
-    return NextResponse.json({ success: true, balance, wallet: keypair?.publicKey.toString(), mode: 'REAL' });
+  if (searchParams.get('action') === 'balance') {
+    return NextResponse.json({ success: true, balance, wallet: wallet?.publicKey.toBase58(), mode: 'REAL' })
   }
   
-  if (action === 'quote') {
-    const quote = await getJupiterQuote(SOL_MINT, searchParams.get('outputMint')!, parseInt(searchParams.get('amount')!));
-    return NextResponse.json({ success: !!quote, quote });
+  if (searchParams.get('action') === 'quote') {
+    const res = await fetch(`${JUPITER}/quote?inputMint=${SOL}&outputMint=${searchParams.get('token')}&amount=${searchParams.get('amount')}&slippageBps=500`)
+    return NextResponse.json({ success: true, quote: await res.json() })
   }
   
-  return NextResponse.json({ success: true, balance, wallet: keypair?.publicKey.toString(), mode: 'REAL' });
+  return NextResponse.json({ success: true, balance, wallet: wallet?.publicKey.toBase58(), mode: 'REAL' })
 }
 
-export async function POST(request: NextRequest) {
-  const body = await request.json();
-  const { action, tokenMint, amountSOL } = body;
-  const keypair = getTreasuryKeypair();
+export async function POST(req: NextRequest) {
+  const body = await request.json()
+  const wallet = getWallet()
+  if (!wallet) return NextResponse.json({ success: false, error: 'Wallet not configured' }, { status: 500 })
   
-  if (!keypair) return NextResponse.json({ success: false, error: 'No wallet configured' }, { status: 500 });
-  
-  const balance = await getRealBalance();
+  const balance = await getBalance()
+  const { action, tokenMint, amountSOL } = body
   
   if (action === 'buy' && tokenMint && amountSOL) {
-    if (balance < amountSOL) return NextResponse.json({ success: false, error: 'Insufficient balance' }, { status: 400 });
-    const amountLamports = Math.floor(amountSOL * LAMPORTS_PER_SOL);
-    const quote = await getJupiterQuote(SOL_MINT, tokenMint, amountLamports);
-    if (!quote) return NextResponse.json({ success: false, error: 'Quote failed' }, { status: 500 });
-    const signature = await executeSwap(keypair, quote);
-    return NextResponse.json({ success: true, action: 'BUY', signature, explorer: `https://solscan.io/tx/${signature}` });
+    if (balance < amountSOL) return NextResponse.json({ success: false, error: 'Insufficient balance' }, { status: 400 })
+    
+    const lamports = Math.floor(amountSOL * LAMPORTS_PER_SOL)
+    const quoteRes = await fetch(`${JUPITER}/quote?inputMint=${SOL}&outputMint=${tokenMint}&amount=${lamports}&slippageBps=500`)
+    const quote = await quoteRes.json()
+    
+    const swapRes = await fetch(`${JUPITER}/swap`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ quoteResponse: quote, userPublicKey: wallet.publicKey.toBase58(), wrapAndUnwrapSol: true, prioritizationFeeLamports: 'auto' })
+    })
+    const { swapTransaction } = await swapRes.json()
+    
+    const tx = VersionedTransaction.deserialize(Buffer.from(swapTransaction, 'base64'))
+    tx.sign([wallet])
+    
+    const conn = new Connection(RPC, 'confirmed')
+    const sig = await conn.sendRawTransaction(tx.serialize(), { skipPreflight: true })
+    await conn.confirmTransaction(sig, 'confirmed')
+    
+    return NextResponse.json({ success: true, action: 'BUY', signature: sig, explorer: `https://solscan.io/tx/${sig}` })
   }
   
-  return NextResponse.json({ success: false, error: 'Invalid action' }, { status: 400 });
+  return NextResponse.json({ success: false, error: 'Invalid action' }, { status: 400 })
 }
