@@ -1,22 +1,6 @@
-/**
- * Unified AI Service
- * Supports OpenAI API for production deployment
- */
-
-import OpenAI from 'openai'
-
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY || ''
 const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-4o-mini'
-
-let openaiClient: OpenAI | null = null
-
-function getOpenAIClient(): OpenAI | null {
-  if (!OPENAI_API_KEY) return null
-  if (!openaiClient) {
-    openaiClient = new OpenAI({ apiKey: OPENAI_API_KEY })
-  }
-  return openaiClient
-}
+const OPENAI_BASE_URL = process.env.OPENAI_BASE_URL || 'https://api.openai.com/v1'
 
 export interface ChatMessage {
   role: 'system' | 'user' | 'assistant'
@@ -27,30 +11,42 @@ export async function createChatCompletion(
   messages: ChatMessage[],
   options: { temperature?: number; maxTokens?: number } = {}
 ): Promise<{ content: string; success: boolean; error?: string }> {
-  const client = getOpenAIClient()
-  if (!client) return { content: '', success: false, error: 'No OpenAI API key' }
+  if (!OPENAI_API_KEY) {
+    return { content: '', success: false, error: 'OPENAI_API_KEY not configured' }
+  }
   
   try {
-    const completion = await client.chat.completions.create({
-      model: OPENAI_MODEL,
-      messages: messages.map(m => ({ role: m.role, content: m.content })),
-      temperature: options.temperature ?? 0.3,
-      max_tokens: options.maxTokens ?? 500,
+    const response = await fetch(`${OPENAI_BASE_URL}/chat/completions`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${OPENAI_API_KEY}` },
+      body: JSON.stringify({
+        model: OPENAI_MODEL,
+        messages,
+        temperature: options.temperature ?? 0.3,
+        max_tokens: options.maxTokens ?? 500,
+      })
     })
-    return { content: completion.choices[0]?.message?.content || '', success: true }
+    
+    if (!response.ok) return { content: '', success: false, error: `API error: ${response.status}` }
+    
+    const data = await response.json()
+    return { content: data.choices?.[0]?.message?.content || '', success: true }
   } catch (error: any) {
     return { content: '', success: false, error: error.message }
   }
+}
+
+export function isAIAvailable(): boolean {
+  return !!OPENAI_API_KEY
 }
 
 export function parseJSONFromResponse<T>(response: string): T | null {
   try {
     const match = response.match(/\{[\s\S]*\}/)
     if (match) return JSON.parse(match[0]) as T
-  } catch (e) {}
+  } catch {}
   return null
 }
 
-export function isAIAvailable(): boolean {
-  return !!OPENAI_API_KEY
-}
+export const AIService = { createChatCompletion, isAIAvailable, parseJSONFromResponse }
+export default AIService
