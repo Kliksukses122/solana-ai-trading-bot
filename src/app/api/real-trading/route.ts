@@ -38,7 +38,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const body = await request.json()
+  const body = await req.json()
   const wallet = getWallet()
   if (!wallet) return NextResponse.json({ success: false, error: 'Wallet not configured' }, { status: 500 })
   
