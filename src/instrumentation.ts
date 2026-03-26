@@ -1,6 +1,6 @@
 export async function register() {
   if (process.env.NEXT_RUNTIME === 'nodejs') {
-    console.log('[Server] Starting Solana AI Trading Bot...')
-    console.log('[Server] OpenAI API configured:', !!process.env.OPENAI_API_KEY)
+    console.log('[Bot] Starting Real Trading Bot...')
+    console.log('[Bot] Wallet configured:', !!process.env.TREASURY_PRIVATE_KEY)
   }
 }
