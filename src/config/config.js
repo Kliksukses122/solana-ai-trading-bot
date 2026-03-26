@@ -1,141 +1,100 @@
-/**
- * Configuration Module - Trading Bot
- * ES Module compatible exports
- */
-
+// src/config/config.js
 export const config = {
   solana: {
     rpcUrl: process.env.RPC_URL || process.env.NEXT_PUBLIC_RPC_ENDPOINT || 'https://api.mainnet-beta.solana.com',
+    wsUrl: process.env.WS_URL || 'wss://api.mainnet-beta.solana.com',
+    network: process.env.NETWORK || 'mainnet-beta',
     commitment: 'confirmed',
-    maxRetries: 3,
   },
-
-  wallet: {
-    inputMint: 'So11111111111111111111111111111111111111112',
-    outputMint: process.env.OUTPUT_MINT || 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
-    privateKey: process.env.TREASURY_PRIVATE_KEY || '',
-  },
-
-  trading: {
-    tradeSizeSol: parseFloat(process.env.TRADE_SIZE_SOL) || 0.01,
-    maxRiskPercent: 2,
-    stopLossPercent: 2,
-    takeProfitPercent: 8,
-    slippageBps: 100,
-    cooldownSeconds: 30,
-    scanIntervalMs: 3000,
-    maxOpenTrades: 5,
-    minLiquidityUsd: 5000,
-    minVolume24h: 2000,
-  },
-
-  risk: {
-    maxDailyLossPercent: 5,
-    maxDailyTrades: 15,
-    maxConsecutiveLosses: 3,
-    consecutiveLossCooldownMs: 3600000,
-    maxRiskPerTrade: 0.02,
-    emergencyStopEnabled: true,
-    blacklistTokens: [],
-    whitelistTokens: [],
-  },
-
-  scoring: {
-    strongBuyThreshold: 8,
-    buyThreshold: 6,
-    smallBuyThreshold: 4,
-    weights: {
-      whale: 5,
-      early: 3,
-      momentum: 2,
-      volume: 2,
-      liquidity: 2,
-      combo: 3,
-    },
-    volumeSpikeThreshold: 50,
-    rsiOversoldThreshold: 35,
-    liquidityThreshold: 50000,
-    maxTokenAgeForSnipe: 10,
-  },
-
-  positionSizing: {
-    multipliers: {
-      STRONG_BUY: 0.02,
-      BUY: 0.01,
-      SMALL_BUY: 0.005,
-    },
-    strategyMultipliers: {
-      SNIPER: 0.8,
-      WHALE: 1.0,
-      MOMENTUM: 0.9,
-      COMBO: 1.2,
-    },
-  },
-
-  exit: {
-    stopLossPercent: 2,
-    trailingStopPercent: 3,
-    trailingStopActivation: 5,
-    takeProfitPercent: 8,
-    partialExitPercent: 5,
-    partialExitAmount: 0.5,
-    maxHoldTime: 3600000,
-    minHoldTime: 60000,
-  },
-
-  whaleTracking: {
-    enabled: true,
-    minWhaleAmount: 50,
-    trackedWallets: [],
-  },
-
-  learning: {
-    enabled: true,
-    learningInterval: 20,
-    minTradesForLearning: 10,
-    autoAdapt: true,
-  },
-
-  bot: {
-    mockMode: process.env.MOCK_MODE !== 'false',
-    dashboardPort: 3000,
-  },
-
+  
   jupiter: {
-    quoteApiUrl: 'https://quote-api.jup.ag/v6',
-    timeout: 30000,
-    maxRetries: 3,
+    baseUrl: 'https://quote-api.jup.ag/v6',
+    slippageBps: 50, // 0.5%
+    useSharedAccounts: true,
   },
-
-  tokenLists: {
-    memeTokens: [
-      'EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm',
-      'DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263',
-      '7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr',
-    ],
-    popular: [
-      'EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm',
-      'DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263',
-      'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
-    ],
-    stablecoins: [
-      'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
-    ],
+  
+  treasury: {
+    publicKey: process.env.TREASURY_PUBLIC_KEY || 'FfZsEWdFdAfUkPJ3Zq45PxeZQGXb9f68HHGFJs9rKuE',
+    privateKey: process.env.TREASURY_PRIVATE_KEY,
   },
-
-  memory: {
-    maxTradeHistory: 1000,
-    maxPriceHistory: 10000,
+  
+  ai: {
+    model: 'gpt-4o-mini',
+    temperature: 0.7,
+    maxTokens: 2000,
+  },
+  
+  trading: {
+    minTradeAmount: 0.001,
+    maxTradeAmount: 1,
+    defaultTradeAmount: 0.01,
+    stopLossPercent: 5,
+    takeProfitPercent: 10,
+    maxPositions: 5,
+    paperTrading: false,
+  },
+  
+  tokens: {
+    SOL: 'So11111111111111111111111111111111111111112',
+    USDC: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
+    USDT: 'Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB',
+    RAY: '4k3Dyjzvzp8eMZWxbsQWTv9q7vXh5NqX5fKFQy5Yd7vD',
+    BONK: 'DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263',
+    WIF: 'EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm',
+    JUP: 'JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN',
+    PYTH: 'HZ1JovNiVvGrGNiiYvEozEVgZ58xaTDL6sbXjJtD9wZy',
+  },
+  
+  agents: {
+    technicalAnalyst: {
+      name: 'Technical Analyst',
+      enabled: true,
+      weight: 0.25,
+    },
+    sentimentAnalyst: {
+      name: 'Sentiment Analyst',
+      enabled: true,
+      weight: 0.20,
+    },
+    liquidityAnalyst: {
+      name: 'Liquidity Analyst',
+      enabled: true,
+      weight: 0.15,
+    },
+    riskManager: {
+      name: 'Risk Manager',
+      enabled: true,
+      weight: 0.20,
+    },
+    portfolioManager: {
+      name: 'Portfolio Manager',
+      enabled: true,
+      weight: 0.10,
+    },
+    executionEngine: {
+      name: 'Execution Engine',
+      enabled: true,
+      weight: 0.10,
+    },
+  },
+  
+  schedule: {
+    analysisInterval: 300000, // 5 minutes
+    tradeInterval: 600000, // 10 minutes
+    reportInterval: 3600000, // 1 hour
+  },
+  
+  api: {
+    heliusApiKey: process.env.HELIUS_API_KEY,
+    birdeyeApiKey: process.env.BIRDEYE_API_KEY,
+    openaiApiKey: process.env.OPENAI_API_KEY,
+  },
+  
+  app: {
+    port: process.env.PORT || 3000,
+    host: process.env.HOST || '0.0.0.0',
+    environment: process.env.NODE_ENV || 'development',
   },
 };
-
-export function getConfigSummary() {
-  return {
-    mode: config.bot.mockMode ? 'MOCK' : 'LIVE',
-    tradeSize: config.trading.tradeSizeSol + ' SOL',
-    strategies: ['SNIPER', 'WHALE', 'MOMENTUM', 'COMBO'],
-    learningEnabled: config.learning.enabled,
-  };
-}
 
 export default config;
