@@ -7,14 +7,7 @@ const config = {
     inputMint: 'So11111111111111111111111111111111111111112',
     outputMint: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
   },
-  trading: {
-    tradeSizeSol: 0.01,
-    maxRiskPercent: 2,
-    stopLossPercent: 2,
-    takeProfitPercent: 8,
-    slippageBps: 100,
-    cooldownSeconds: 30,
-  },
+  trading: { tradeSizeSol: 0.01, stopLossPercent: 2, takeProfitPercent: 8, slippageBps: 100 },
   bot: { mockMode: true },
   jupiter: { quoteApiUrl: 'https://quote-api.jup.ag/v6', timeout: 30000 },
 };
