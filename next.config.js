@@ -9,6 +9,9 @@ const nextConfig = {
     'preview-chat-5f5e5356-32d0-478d-845d-7944f5b7bda3.space.z.ai',
     '.space.z.ai',
   ],
+  experimental: {
+    instrumentationHook: true,
+  },
 };
 
 module.exports = nextConfig;
